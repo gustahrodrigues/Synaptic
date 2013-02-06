@@ -5,6 +5,7 @@
       <provide interface="org.eclipselabs.restlet.IResourceProvider"/>
    </service>
    <property name="paths" type="String">
-     /ping
+	 /ping
+     /ping/{id}
    </property>
 </scr:component>
