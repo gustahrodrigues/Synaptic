@@ -43,9 +43,10 @@ public class Resource extends ServerResource {
 
 			LinkedHashMap<String, String> result = new LinkedHashMap<>();
 			result.put("result", "Model saved succesfully");
-
+			result.put("model", new Gson().toJson(model));
+			
 			String jsonString = new Gson().toJson(result);
-
+			
 			return new StringRepresentation(jsonString, MediaType.APPLICATION_JSON);
 		}
 		catch(Exception ex)
@@ -75,7 +76,8 @@ public class Resource extends ServerResource {
 
 			LinkedHashMap<String, String> result = new LinkedHashMap<>();
 			result.put("result", "Model updated succesfully");
-
+			result.put("model", new Gson().toJson(model));
+			
 			String jsonString = new Gson().toJson(result);
 
 			return new StringRepresentation(jsonString, MediaType.APPLICATION_JSON);
