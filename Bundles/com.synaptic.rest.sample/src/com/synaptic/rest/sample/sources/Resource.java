@@ -13,7 +13,8 @@ import org.restlet.resource.Post;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
-import com.google.gson.Gson;
+import com.synaptic.messageprotocol.interfacedefinition.MessageProtocolBaseClass;
+import com.synaptic.messageprotocol.json.JSONBuilder;
 import com.synaptic.rest.sample.db.Database;
 import com.synaptic.rest.sample.model.SampleModel;
 
@@ -26,36 +27,40 @@ public class Resource extends ServerResource {
 
 		SampleModel model = Database.getInstance().getById(Integer.parseInt(id));
 
-		return new Gson().toJson(model);
+		MessageProtocolBaseClass jsonBuilder = new JSONBuilder();
+		
+		return jsonBuilder.serialize(model, SampleModel.class);
 	}
 
 	@Post("json")
 	public Representation postSampleModel(Representation entity)
 	{
+		MessageProtocolBaseClass jsonBuilder = new JSONBuilder();
+		
 		try
 		{
 			JsonRepresentation represent = new JsonRepresentation(entity);
 			JSONObject jObject = represent.getJsonObject();
 
-			SampleModel model = new Gson().fromJson(jObject.toString(), SampleModel.class);
+			SampleModel model = (SampleModel) jsonBuilder.deserialize(jObject.toString(), SampleModel.class);
 
 			Database.getInstance().save(model);
 
 			LinkedHashMap<String, String> result = new LinkedHashMap<>();
 			result.put("result", "Model saved succesfully");
-			result.put("model", new Gson().toJson(model));
+			result.put("model", jsonBuilder.serialize(model, SampleModel.class));
 			
-			String jsonString = new Gson().toJson(result);
+			String jsonString = jsonBuilder.serialize(result, LinkedHashMap.class);
 			
 			return new StringRepresentation(jsonString, MediaType.APPLICATION_JSON);
 		}
 		catch(Exception ex)
 		{
-			LinkedHashMap<Object, String> list = new LinkedHashMap<Object, String>();
-			list.put("service_status", "true");
-			list.put("system_status", "true");
-			list.put("result", "No Data Found!");
-			String jsonString = new Gson().toJson(list);
+			LinkedHashMap<Object, String> result = new LinkedHashMap<Object, String>();
+			result.put("service_status", "true");
+			result.put("system_status", "true");
+			result.put("result", "No Data Found!");
+			String jsonString = jsonBuilder.serialize(result, LinkedHashMap.class);
 			ex.printStackTrace();
 
 			return new StringRepresentation(jsonString, MediaType.APPLICATION_JSON);
@@ -65,30 +70,32 @@ public class Resource extends ServerResource {
 	@Put("json")
 	public Representation putSampleModel(Representation entity)
 	{
+		MessageProtocolBaseClass jsonBuilder = new JSONBuilder();
+		
 		try
 		{
 			JsonRepresentation represent = new JsonRepresentation(entity);
 			JSONObject jObject = represent.getJsonObject();
 
-			SampleModel model = new Gson().fromJson(jObject.toString(), SampleModel.class);
-
+			SampleModel model = (SampleModel) jsonBuilder.deserialize(jObject.toString(), SampleModel.class);
+			
 			Database.getInstance().update(model);
 
 			LinkedHashMap<String, String> result = new LinkedHashMap<>();
 			result.put("result", "Model updated succesfully");
-			result.put("model", new Gson().toJson(model));
+			result.put("model", jsonBuilder.serialize(model, SampleModel.class));
 			
-			String jsonString = new Gson().toJson(result);
+			String jsonString = jsonBuilder.serialize(result, LinkedHashMap.class);
 
 			return new StringRepresentation(jsonString, MediaType.APPLICATION_JSON);
 		}
 		catch(Exception ex)
 		{
-			LinkedHashMap<Object, String> list = new LinkedHashMap<Object, String>();
-			list.put("service_status", "true");
-			list.put("system_status", "true");
-			list.put("result", "No Data Found!");
-			String jsonString = new Gson().toJson(list);
+			LinkedHashMap<Object, String> result = new LinkedHashMap<Object, String>();
+			result.put("service_status", "true");
+			result.put("system_status", "true");
+			result.put("result", "No Data Found!");
+			String jsonString = jsonBuilder.serialize(result, LinkedHashMap.class);
 			ex.printStackTrace();
 
 			return new StringRepresentation(jsonString, MediaType.APPLICATION_JSON);
@@ -105,7 +112,8 @@ public class Resource extends ServerResource {
 		LinkedHashMap<String, String> result = new LinkedHashMap<>();
 		result.put("result", "Model deleted succesfully");
 
-		String jsonString = new Gson().toJson(result);
+		MessageProtocolBaseClass jsonBuilder = new JSONBuilder();
+		String jsonString = jsonBuilder.serialize(result, LinkedHashMap.class);
 
 		return jsonString;
 	}

@@ -5,8 +5,7 @@ Bundle-SymbolicName: com.synaptic.rest.sample
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: SYNAPTIC
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package: com.google.gson;version="2.2.2",
- org.eclipselabs.restlet,
+Import-Package: org.eclipselabs.restlet,
  org.json,
  org.restlet,
  org.restlet.data,
@@ -15,3 +14,5 @@ Import-Package: com.google.gson;version="2.2.2",
  org.restlet.resource
 Service-Component: OSGI-INF/application.xml,OSGI-INF/ping.xml,
  OSGI-INF/router.xml
+Require-Bundle: com.synaptic.messageprotocol.interfacedefinition;bundle-version="1.0.0",
+ com.synaptic.messageprotocol.json;bundle-version="1.0.0"
