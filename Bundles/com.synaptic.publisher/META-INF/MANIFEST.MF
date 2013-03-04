@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Publisher
+Bundle-SymbolicName: com.synaptic.publisher
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: SYNAPTIC
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: org.osgi.framework,
+ org.osgi.service.event
+Export-Package: com.synaptic.publisher

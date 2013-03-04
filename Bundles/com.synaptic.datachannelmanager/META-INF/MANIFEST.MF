@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Datachannelmanager
+Bundle-SymbolicName: com.synaptic.datachannelmanager
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: SYNAPTIC
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
